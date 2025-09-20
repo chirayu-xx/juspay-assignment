@@ -1,14 +1,12 @@
 import React from 'react';
-import { CssBaseline, ThemeProvider } from '@mui/material';
 import Dashboard from './components/Dashboard';
 import { mockQuery } from './data/dashboardMockData';
-import theme from './theme/theme';
+import { AppThemeProvider } from './contexts/ThemeContext';
 
 const AppDashboard: React.FC = () => (
-  <ThemeProvider theme={theme}>
-    <CssBaseline />
+  <AppThemeProvider>
     <Dashboard data={mockQuery} />
-  </ThemeProvider>
+  </AppThemeProvider>
 );
 
 export default AppDashboard;

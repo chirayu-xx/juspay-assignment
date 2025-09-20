@@ -12,12 +12,12 @@ import WorldMap from './WorldMap';
 import ProductsTable from './ProductsTable';
 import type { DashboardData } from '../types/dashboard';
 
-const MainContainer = styled(Box)({
+const MainContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   minHeight: '100vh',
-  backgroundColor: '#ffffff',
+  backgroundColor: theme.palette.background.default,
   position: 'relative'
-});
+}));
 
 const SidebarContainer = styled(Box)({
   position: 'fixed',
@@ -48,12 +48,12 @@ const ContentArea = styled(Box)(({ theme }) => ({
   }
 }));
 
-const HeaderContainer = styled(Box)({
+const HeaderContainer = styled(Box)(({ theme }) => ({
   position: 'sticky',
   top: 0,
   zIndex: 1100,
-  backgroundColor: '#ffffff'
-});
+  backgroundColor: theme.palette.background.default
+}));
 
 const MainContent = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -97,7 +97,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
                   title="Customers"
                   value={data.metrics.customers.value}
                   change={data.metrics.customers.change}
-                  backgroundColor="#e3f5ff"
+                  backgroundColor="secondary.main"
                 />
               </Box>
               <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -119,7 +119,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
                   title="Growth"
                   value={data.metrics.growth.value}
                   change={data.metrics.growth.change}
-                  backgroundColor="#e5ecf6"
+                  backgroundColor="grey.50"
                 />
               </Box>
             </Stack>

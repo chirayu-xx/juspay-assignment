@@ -81,5 +81,3 @@ export const mockQuery = {
 export const mockRootProps = {
   initialData: mockQuery
 };
-
-// ... existing code ...

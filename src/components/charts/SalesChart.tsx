@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles';
 import ReactApexChart from 'react-apexcharts';
 import type { SalesBreakdownData } from '../../types/dashboard';
 import { formatCurrency } from '../../utils/formatters';
+import { useTheme } from '@mui/material/styles';
 
 const ChartContainer = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -20,7 +21,6 @@ const LegendItem = styled(Stack)(({ theme }) => ({
   marginBottom: theme.spacing(1.5)
 }));
 
-
 const Dot = styled('span')<{ color: string }>(({ color }) => ({
   display: 'inline-block',
   width: 10,
@@ -31,32 +31,18 @@ const Dot = styled('span')<{ color: string }>(({ color }) => ({
   marginTop: 2
 }));
 
-const PercentageText = styled(Typography)(({ theme }) => ({
-  fontSize: '20px',
-  fontWeight: 600,
-  color: '#1c1c1c',
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  zIndex: 10,
-  pointerEvents: 'none',
-  background: '#fff',
-  borderRadius: 8,
-  padding: '2px 10px',
-  boxShadow: '0 1px 4px rgba(0,0,0,0.04)'
-}));
-
 interface SalesChartProps {
   data: SalesBreakdownData[];
 }
 
 const SalesChart: React.FC<SalesChartProps> = ({ data }) => {
+  const theme = useTheme();
+  
   const colorMap = {
-    'Direct': '#1c1c1c',
-    'Affilliate': '#baedbd',
-    'Sponsored': '#95a4fc',
-    'E-mail': '#b1e3ff'
+    'Direct': theme.palette.primary.main,
+    'Affilliate': theme.palette.success.main,
+    'Sponsored': theme.palette.info.main,
+    'E-mail': theme.palette.error.main
   };
 
   // ApexCharts expects values, not percentages, for the donut
@@ -67,7 +53,7 @@ const SalesChart: React.FC<SalesChartProps> = ({ data }) => {
 
   return (
     <ChartContainer>
-      <Typography variant="h6" sx={{ mb: 2 }}>
+      <Typography variant="h6" sx={{ mb: 2, color: 'text.primary' }}>
         Total Sales
       </Typography>
       <Stack alignItems="center" sx={{ mb: 2 }}>
@@ -99,7 +85,7 @@ const SalesChart: React.FC<SalesChartProps> = ({ data }) => {
                         formatter: () => `${mainPercent}%`,
                         fontSize: '18px',
                         fontWeight: 600,
-                        color: '#1c1c1c',
+                        color: theme.palette.text.primary,
                       }
                     }
                   }
@@ -120,11 +106,11 @@ const SalesChart: React.FC<SalesChartProps> = ({ data }) => {
           <LegendItem key={item.category}>
             <Box display="flex" alignItems="center">
               <Dot color={colorMap[item.category]} />
-              <Typography variant="body2" sx={{ fontWeight: 500, color: '#1c1c1c', minWidth: 70 }}>
+              <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.primary', minWidth: 70 }}>
                 {item.category}
               </Typography>
             </Box>
-            <Typography variant="body2" sx={{ fontWeight: 400, color: '#1c1c1c', minWidth: 60, textAlign: 'right' }}>
+            <Typography variant="body2" sx={{ fontWeight: 400, color: 'text.primary', minWidth: 60, textAlign: 'right' }}>
               {formatCurrency(item.value)}
             </Typography>
           </LegendItem>

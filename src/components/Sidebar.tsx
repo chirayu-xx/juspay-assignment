@@ -65,7 +65,9 @@ const TabContainer = styled(Stack)(({ theme }) => ({
   gap: theme.spacing(0.5)
 }));
 
-const TabButton = styled(Typography)<{ active?: boolean }>(({ theme, active }) => ({
+const TabButton = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== 'active'
+})<{ active?: boolean }>(({ theme, active }) => ({
   fontSize: '14px',
   fontWeight: 400,
   color: active ? theme.palette.text.primary : theme.palette.text.disabled,
@@ -73,7 +75,9 @@ const TabButton = styled(Typography)<{ active?: boolean }>(({ theme, active }) =
   padding: theme.spacing(0.5, 1)
 }));
 
-const StyledListItemButton = styled(ListItemButton)<{ active?: boolean }>(({ theme, active }) => ({
+const StyledListItemButton = styled(ListItemButton, {
+  shouldForwardProp: (prop) => prop !== 'active'
+})<{ active?: boolean }>(({ theme, active }) => ({
   borderRadius: theme.spacing(1),
   margin: theme.spacing(0, 1),
   backgroundColor: active ? theme.palette.grey[200] : 'transparent',
@@ -118,8 +122,8 @@ const Sidebar: React.FC = () => {
     <StyledDrawer variant="permanent" anchor="left">
       <BrandContainer direction="row">
         <BrandLogo 
-          src="https://images.unsplash.com/photo-1627843563095-f6e94676cfe0?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTAwNDR8MHwxfHNlYXJjaHwxfHxsb2dvJTIwYnJhbmQlMjBjb21wYW55fGVufDB8Mnx8fDE3NTgyOTc2NzZ8MA&ixlib=rb-4.1.0&q=85" 
-          alt="ByeWind brand logo - Shubham Dhage on Unsplash" 
+          src="/images/brand-logo.png" 
+          alt="ByeWind brand logo" 
         />
         <Typography variant="body1" sx={{ fontWeight: 400 }}>
           ByeWind

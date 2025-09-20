@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -7,15 +7,18 @@ import {
   IconButton,
   TextField,
   InputAdornment,
-  Breadcrumbs
+  Breadcrumbs,
+  Switch
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import ReorderOutlinedIcon from '@mui/icons-material/ReorderOutlined';
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import ManageSearchOutlinedIcon from '@mui/icons-material/ManageSearchOutlined';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import HistoryIcon from '@mui/icons-material/History';
-import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
+import SidebarIcon from './icons/SidebarIcon';
+import StarIcon from './icons/StarIcon';
+import SearchIcon from './icons/SearchIcon';
+import SunIcon from './icons/SunIcon';
+import ClockIcon from './icons/ClockIcon';
+import BellIcon from './icons/BellIcon';
+import { useAppTheme } from '../contexts/ThemeContext';
+import { useNavigate } from 'react-router-dom';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
@@ -55,29 +58,47 @@ const SearchField = styled(TextField)(({ theme }) => ({
   }
 }));
 
-const BreadcrumbText = styled(Typography)<{ active?: boolean }>(({ theme, active }) => ({
+const BreadcrumbText = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== 'active'
+})<{ active?: boolean }>(({ theme, active }) => ({
   fontSize: '14px',
   fontWeight: 400,
   color: active ? theme.palette.text.primary : theme.palette.text.secondary
 }));
 
 const Header: React.FC = () => {
+  useEffect(() => {
+    document.title = 'JusPay assignment';
+  }, []);
+  const { mode, toggleTheme } = useAppTheme();
+  const navigate = useNavigate();
+
   return (
     <StyledAppBar>
       <StyledToolbar>
         <Stack direction="row" alignItems="center" spacing={3}>
           <Stack direction="row" alignItems="center" spacing={1}>
             <IconButton size="small">
-              <ReorderOutlinedIcon sx={{ fontSize: 20, color: 'text.primary' }} />
+              <SidebarIcon width={20} height={20} color="currentColor" />
             </IconButton>
             <IconButton size="small">
-              <StarOutlineIcon sx={{ fontSize: 20, color: 'text.primary' }} />
+              <StarIcon width={20} height={20} color="currentColor" />
             </IconButton>
           </Stack>
-          
           <Breadcrumbs separator="/" sx={{ color: 'text.secondary' }}>
-            <BreadcrumbText>Dashboards</BreadcrumbText>
-            <BreadcrumbText active>Default</BreadcrumbText>
+            <BreadcrumbText
+              sx={{ cursor: 'pointer', textDecoration: 'none' }}
+              onClick={() => navigate('/')}
+            >
+              Dashboards
+            </BreadcrumbText>
+            <BreadcrumbText
+              active
+              sx={{ cursor: 'pointer', textDecoration: 'none' }}
+              onClick={() => navigate('/order_list')}
+            >
+              Default
+            </BreadcrumbText>
           </Breadcrumbs>
         </Stack>
 
@@ -89,7 +110,7 @@ const Header: React.FC = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <ManageSearchOutlinedIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
+                  <SearchIcon width={16} height={16} color="currentColor" />
                 </InputAdornment>
               ),
               endAdornment: (
@@ -101,19 +122,18 @@ const Header: React.FC = () => {
               )
             }}
           />
-          
           <Stack direction="row" spacing={1}>
-            <IconButton size="small">
-              <LightModeIcon sx={{ fontSize: 20, color: 'text.primary' }} />
+            <IconButton size="small" onClick={toggleTheme}>
+              <SunIcon width={20} height={20} color="currentColor" />
             </IconButton>
             <IconButton size="small">
-              <HistoryIcon sx={{ fontSize: 20, color: 'text.primary' }} />
+              <ClockIcon width={20} height={20} color="currentColor" />
             </IconButton>
             <IconButton size="small">
-              <NotificationsOutlinedIcon sx={{ fontSize: 20, color: 'text.primary' }} />
+              <BellIcon width={20} height={20} color="currentColor" />
             </IconButton>
             <IconButton size="small">
-              <ReorderOutlinedIcon sx={{ fontSize: 20, color: 'text.primary' }} />
+              <SidebarIcon width={20} height={20} color="currentColor" />
             </IconButton>
           </Stack>
         </Stack>

@@ -1,16 +1,19 @@
 import React from 'react';
-import { CssBaseline, ThemeProvider } from '@mui/material';
-import Dashboard from './components/Dashboard';
-import { mockQuery } from './data/dashboardMockData';
-import theme from './theme/theme';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AppThemeProvider } from './contexts/ThemeContext';
+import Header from './components/Header';
+import AppDashboard from './App.dashboard';
+import AppOrders from './App.orders';
 
-const App: React.FC = () => {
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Dashboard data={mockQuery} />
-    </ThemeProvider>
-  );
-};
+const App: React.FC = () => (
+  <AppThemeProvider>
+    <Router>
+      <Routes>
+        <Route path="/order_list" element={<AppOrders />} />
+        <Route path="/" element={<AppDashboard />} />
+      </Routes>
+    </Router>
+  </AppThemeProvider>
+);
 
 export default App;
